@@ -64,7 +64,7 @@
 
 ```html
 <div id="app">
-  <p class="lead text-muted">Victory Points: 0</p>
+  <p class="lead text-muted">Current Temp: 0&deg;</p>
 </div>
 ```
 
@@ -75,13 +75,13 @@
   var app = new Vue({
     el: '#app',
     data: {
-      points: 42
+      tempF: 75
     }
   })
 </script>
 ```
 
-* Update the `div` by replacing `0` with `{{ points }}`
+* Update the `div` by replacing `0` with `{{ tempF }}`
 
 > At the core of Vue.js is a system that enables us to declaratively render data to the DOM using straightforward template syntax.
 
@@ -89,4 +89,4 @@
 
 > The data and the DOM are now linked, and everything is now reactive.
 
-* In the browser console, write `app.points = 42` and see the value change in the dom
+* In the browser console, write `app.tempF = 42` and see the value change in the dom
