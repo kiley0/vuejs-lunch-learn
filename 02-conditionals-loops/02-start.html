@@ -30,7 +30,7 @@
         <h1 class="jumbotron-heading">Learn Vue.js</h1>
         <p class="lead text-muted">By Kiley Dorton</p>
         <div id="app">
-          <p class="lead text-muted">Victory Points: {{points}}</p>
+          <p class="lead text-muted">Current Temperature: {{tempF}}&deg;</p>
         </div>
       </div>
     </section>
@@ -43,7 +43,7 @@
     var app = new Vue({
       el: '#app',
       data: {
-        points: 42
+        tempF: 75
       }
     })
   </script>

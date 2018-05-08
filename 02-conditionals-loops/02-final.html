@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+
+  <title>Learn Vue.js</title>
+</head>
+
+<body>
+  <header>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex justify-content-between">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <strong>Learn Vue.js</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Learn Vue.js</h1>
+        <p class="lead text-muted">By Kiley Dorton</p>
+        <div id="app">
+          <p class="lead text-muted">Current Temperature: {{tempF}}&deg;</p>
+          <p v-if="tempF >= 90" class="lead text-muted">It's hot outside!</p>
+          <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
+          <p v-else-if="tempF >= 70 && tempF < 80" class="lead text-muted">It's comfortable outside</p>
+          <p v-else-if="tempF < 70" class="lead text-muted">It's chilly outside</p>
+          <p v-else="tempF < 70" class="lead text-muted">It's cold outside!</p>
+          <div class="text-left">
+            <ol>
+              <li v-for="city in cities">
+                {{ city.name }}
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vue development version goes here -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        tempF: 75,
+        cities: [
+          { name: "Atlanta" },
+          { name: "New York" },
+          { name: "Austin" },
+          { name: "Seattle" },
+          { name: "Tokyo" }
+        ]
+      }
+    })
+  </script>
+</body>
+
+</html>
