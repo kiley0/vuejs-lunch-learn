@@ -14,13 +14,13 @@
 
 ```js
 Vue.component("city-card", {
-  template: "<div>I am a city card</div>"
+  template: `<h1>City Card <span class="badge badge-secondary">New</span></h1>`
 });
 ```
 
-* Then add `<city-card></city-card>` below the show/hide cities button
+* Then add `<city-card></city-card>` below the select
 
-* Show that the div is displaying
+* Show that the component is displaying
 
 * Now update the component with props and card markup
 
@@ -28,14 +28,33 @@ Vue.component("city-card", {
 Vue.component("city-card", {
   // The city-card component now accepts a
   // "prop", which is like a custom attribute.
-  // This prop is called todo.
-  props: ["city"],
+  props: [
+    "cityName",
+    "tempF",
+    "weatherDesc",
+    "fiveDayAverageTemp",
+    "forecastFiveDays"
+  ],
   template: `
-    <div class="card">
-      <div class="card-body">
-        {{ city.name }}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ cityName }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Now: {{ tempF }}&deg; - {{ weatherDesc }}</h6>
+          <button type="button" class="btn btn-primary" v-on:click="toggleForecast">{{showForecast ? 'Hide' : 'Show'}} Forecast</button>
+          <div v-if="showForecast">
+            <p class="card-text">
+              <p>Five-day Forecast (avg: {{ fiveDayAverageTemp }}&deg;)</p>
+              <p v-for="forecast in forecastFiveDays">
+                <b>{{ forecast.temp }}&deg;</b>
+                <br />
+                <em>{{ forecast.weatherDesc }}</em>
+                <br />
+                <small>{{ forecast.timestamp }}</small>
+              </p>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
   `
 });
 ```
@@ -43,9 +62,21 @@ Vue.component("city-card", {
 * Now update the `<city-card></city-card>`
 
 ```html
-<city-card
-  v-for="city in cities"
-  v-bind:city="city"
-  v-bind:key="city.name">
-</city-card>
+      <city-card :city-name="cityName" :temp-f="tempF" :weather-desc="weatherDesc" :five-day-average-temp="fiveDayAverageTemp"
+        :forecast-five-days="forecastFiveDays"></city-card>
+```
+
+* And move over the state for the show/hide of forecast
+
+```js
+      data: function () {
+        return {
+          showForecast: false,
+        }
+      },
+      methods: {
+        toggleForecast: function () {
+          this.showForecast = !this.showForecast
+        },
+      }
 ```

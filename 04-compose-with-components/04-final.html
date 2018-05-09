@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
 
-  <title>Learn Vue.js</title>
+  <title>Vue Weather</title>
 </head>
 
 <body>
@@ -17,105 +17,147 @@
     <div class="navbar navbar-dark bg-dark box-shadow">
       <div class="container d-flex justify-content-between">
         <a href="#" class="navbar-brand d-flex align-items-center">
-          <strong>Learn Vue.js</strong>
+          <strong>Vue Weather</strong>
         </a>
       </div>
     </div>
   </header>
 
-  <main id="app" role="main">
+  <main role="main">
 
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading">Learn Vue.js</h1>
-        <p class="lead text-muted">By {{ userFullName }}</p>
-        <div>
-          <section class="mb-4">
-            <p class="lead text-muted">Current Temperature: {{tempF}}&deg;</p>
-            <p v-if="tempF >= 90" class="lead text-muted">It's hot outside!</p>
-            <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
-            <p v-else-if="tempF >= 70 && tempF < 80" class="lead text-muted">It's comfortable outside</p>
-            <p v-else-if="tempF >= 40 && tempF < 70" class="lead text-muted">It's chilly outside</p>
-            <p v-else="tempF < 40" class="lead text-muted">It's cold outside!</p>
-            <button type="button" class="btn" v-on:click="randomizeTemp">New Temp</button>
-          </section>
-          <section class="mb-4 text-left">
-            <hr>
-            <div class="form-group text-left">
-              <label for="firstNameInput">First Name</label>
-              <input v-model="user.firstName" type="text" class="form-control" id="firstNameInput" placeholder="Kiley">
-            </div>
-            <div class="form-group text-left">
-              <label for="lastNameInput">Last Name</label>
-              <input v-model="user.lastName" type="text" class="form-control" id="lastNameInput" placeholder="Dorton">
-            </div>
-            <hr>
-          </section>
-          <section class="mb-4">
-            <button type="button" class="btn btn-primary mb-1" v-on:click="toggleShowCities">{{showCities ? 'Hide' : 'Show'}} Cities</button>
-            <div v-if="showCities">
-              <city-card v-for="city in cities" v-bind:city="city" v-bind:key="city.name">
-              </city-card>
-            </div>
-          </section>
-        </div>
+        <h1 class="jumbotron-heading">Vue Weather</h1>
+        <p class="lead text-muted">Learning Vue by making a weather app</p>
       </div>
     </section>
+
+    <section id="app" class="container">
+      <div class="form-group mb-4">
+        <label for="citySelect">Select a city</label>
+        <select v-model="cityName" v-on:change="fetchData" class="form-control" id="citySelect">
+          <option>Atlanta</option>
+          <option>London</option>
+          <option>Tokyo</option>
+          <option>San Francisco</option>
+          <option>Cairo</option>
+        </select>
+      </div>
+
+      <city-card :city-name="cityName" :temp-f="tempF" :weather-desc="weatherDesc" :five-day-average-temp="fiveDayAverageTemp"
+        :forecast-five-days="forecastFiveDays"></city-card>
+    </section>
+
   </main>
 
   <!-- Vue development version goes here -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
   <script>
+    var OWM_CURRENT_URL = "api.openweathermap.org/data/2.5/weather";
+    var OWM_FORECAST_URL = "api.openweathermap.org/data/2.5/forecast";
+    var OWM_API_KEY = "4dcdc5ef8f4820617031f0658196dcba";
+
     Vue.component("city-card", {
-      // The todo-item component now accepts a
+      // The city-card component now accepts a
       // "prop", which is like a custom attribute.
-      // This prop is called todo.
-      props: ["city"],
+      props: ["cityName", "tempF", "weatherDesc", "fiveDayAverageTemp", "forecastFiveDays"],
       template: `
-        <div class="card">
-          <div class="card-body">
-            {{ city.name }} - {{ city.tempF }}&deg;
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ cityName }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Now: {{ tempF }}&deg; - {{ weatherDesc }}</h6>
+          <button type="button" class="btn btn-primary" v-on:click="toggleForecast">{{showForecast ? 'Hide' : 'Show'}} Forecast</button>
+          <div v-if="showForecast">
+            <p class="card-text">
+              <p>Five-day Forecast (avg: {{ fiveDayAverageTemp }}&deg;)</p>
+              <p v-for="forecast in forecastFiveDays">
+                <b>{{ forecast.temp }}&deg;</b>
+                <br />
+                <em>{{ forecast.weatherDesc }}</em>
+                <br />
+                <small>{{ forecast.timestamp }}</small>
+              </p>
+            </p>
           </div>
         </div>
-      `
+      </div>
+  `,
+      data: function () {
+        return {
+          showForecast: false,
+        }
+      },
+      methods: {
+        toggleForecast: function () {
+          this.showForecast = !this.showForecast
+        },
+      }
     });
 
     var app = new Vue({
       el: '#app',
       data: {
+        showForecast: false,
+        cityName: 'Atlanta',
         tempF: 75,
-        showCities: false,
-        user: {
-          firstName: 'Kiley',
-          lastName: 'Dorton'
-        },
-        cities: [
-          {
-            name: 'Atlanta',
-            tempF: 75
-          },
-          {
-            name: 'New York',
-            tempF: 65
-          },
-          {
-            name: 'Austin',
-            tempF: 85
-          },
-        ]
+        weatherDesc: 'Sunny',
+        forecastFiveDays: []
+      },
+      created() {
+        this.fetchData();
       },
       methods: {
-        randomizeTemp: function () {
-          this.tempF = Math.floor(Math.random() * 100);
+        fetchData: function () {
+          return this.fetchCurrentWeather()
+            .then(() => this.fetchFiveDayForecast());
         },
-        toggleShowCities: function () {
-          this.showCities = !this.showCities
+        fetchCurrentWeather: function () {
+          return fetch(`http://${OWM_CURRENT_URL}?q=${this.cityName}&units=imperial&APPID=${OWM_API_KEY}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.cod == 200 && data.main) {
+                this.tempF = data.main.temp;
+                this.weatherDesc = data.weather[0].description;
+              }
+              console.log("Fetched current weather from OpenWeatherMap:");
+              console.log(data);
+            })
+            .catch(err => {
+              console.warn(err);
+            })
+        },
+        fetchFiveDayForecast: function () {
+          return fetch(
+            `http://${OWM_FORECAST_URL}?q=${
+            this.cityName
+            }&units=imperial&APPID=${OWM_API_KEY}`
+          )
+            .then(response => response.json())
+            .then(data => {
+              if (data.list && data.list.length > 0) {
+                this.forecastFiveDays = data.list.map(f => {
+                  return {
+                    timestamp: new Date(f.dt_txt).toString(),
+                    temp: f.main.temp,
+                    weatherDesc: f.weather[0].description
+                  };
+                });
+              }
+              console.log("Fetched forecase from OpenWeatherMap:");
+              console.log(data);
+            })
+            .catch(err => {
+              console.warn(err);
+            });
         }
       },
       computed: {
-        userFullName: function () {
-          return this.user.firstName + " " + this.user.lastName;
+        fiveDayAverageTemp: function () {
+          return (
+            Math.round(this.forecastFiveDays.reduce((acc, curr) => acc + curr.temp, 0) /
+              this.forecastFiveDays.length)
+          );
         }
       }
     })
