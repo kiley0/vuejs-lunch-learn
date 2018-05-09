@@ -12,9 +12,10 @@ Introducing Vue.js to my company
 * 03 - Handle User Input
 * 04 - Compose with Components
 * 05 - Continuous Deployment with Netlify
+* 06 - Install and use the vue-cli
 
-* Build the same thing using the vue-cli
 * Walk through the real-world vue project
+
 * Where to go next (nuxt)
 
 ## What is Vue.js?
@@ -55,3 +56,32 @@ Optimization efforts:
 **Pro tip**
 
 > We recommend using templates for presentational components and render function / JSX for logical ones.
+
+## Quick History
+
+> Vue was created by Evan You after working for Google using AngularJS in a number of projects. He later summed up his thought process, "I figured, what if I could just extract the part that I really liked about Angular and build something really lightweight without all the extra concepts involved?"
+
+> Vue was originally released in February 2014.
+
+> Vue is supported by corporate sponsors and people like you and me. On Patreon, vue currently receives $15,857 per month
+> https://www.patreon.com/evanyou
+
+## Walk through the real-world vue project
+
+Go here: https://github.com/gothinkster/vue-realworld-example-app
+Clone locally
+
+```
+# install dependencies
+> npm install
+# serve with hot reload at localhost:8080
+> npm run dev
+```
+
+## Where to go next
+
+* Nuxt
+  https://nuxtjs.org/guide
+
+* Vue Roadmap
+  https://github.com/vuejs/roadmap
