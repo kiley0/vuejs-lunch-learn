@@ -30,7 +30,7 @@
         <h1 class="jumbotron-heading">Learn Vue.js</h1>
         <p class="lead text-muted">By {{ userFullName }}</p>
         <div>
-          <section class="mb-2">
+          <section class="mb-4">
             <p class="lead text-muted">Current Temperature: {{tempF}}&deg;</p>
             <p v-if="tempF >= 90" class="lead text-muted">It's hot outside!</p>
             <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
@@ -39,7 +39,7 @@
             <p v-else="tempF < 40" class="lead text-muted">It's cold outside!</p>
             <button type="button" class="btn" v-on:click="randomizeTemp">New Temp</button>
           </section>
-          <section class="text-left">
+          <section class="mb-4 text-left">
             <hr>
             <div class="form-group text-left">
               <label for="firstNameInput">First Name</label>
@@ -51,12 +51,12 @@
             </div>
             <hr>
           </section>
-          <section>
+          <section class="mb-4">
             <button type="button" class="btn btn-primary mb-1" v-on:click="toggleShowCities">{{showCities ? 'Hide' : 'Show'}} Cities</button>
             <div v-if="showCities">
               <div class="card" v-for="city in cities">
                 <div class="card-body">
-                  {{ city.name }}
+                  {{ city.name }} - {{ city.tempF }}&deg;
                 </div>
               </div>
             </div>
@@ -80,11 +80,18 @@
           lastName: 'Dorton'
         },
         cities: [
-          { name: "Atlanta" },
-          { name: "New York" },
-          { name: "Austin" },
-          { name: "Seattle" },
-          { name: "Tokyo" }
+          {
+            name: 'Atlanta',
+            tempF: 75
+          },
+          {
+            name: 'New York',
+            tempF: 65
+          },
+          {
+            name: 'Austin',
+            tempF: 85
+          },
         ]
       },
       methods: {

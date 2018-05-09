@@ -67,7 +67,7 @@ var app = new Vue({
 * Add a basic form above the cities list
 
 ```html
-<section class="text-left">
+<section class="mb-4 text-left">
   <hr>
   <div class="form-group text-left">
     <label for="firstNameInput">First Name</label>

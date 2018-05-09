@@ -30,19 +30,21 @@
         <h1 class="jumbotron-heading">Learn Vue.js</h1>
         <p class="lead text-muted">By Kiley Dorton</p>
         <div id="app">
-          <p class="lead text-muted">Current Temperature: {{tempF}}&deg;</p>
-          <p v-if="tempF >= 90" class="lead text-muted">It's hot outside!</p>
-          <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
-          <p v-else-if="tempF >= 70 && tempF < 80" class="lead text-muted">It's comfortable outside</p>
-          <p v-else-if="tempF < 70" class="lead text-muted">It's chilly outside</p>
-          <p v-else="tempF < 70" class="lead text-muted">It's cold outside!</p>
-          <div class="text-left">
-            <ol>
-              <li v-for="city in cities">
-                {{ city.name }}
-              </li>
-            </ol>
-          </div>
+          <section class="mb-4">
+            <p class="lead text-muted">Current temp: {{ tempF }}&deg;</p>
+            <p v-if="tempF >= 90" class="lead text-muted">It's hot outside!</p>
+            <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
+            <p v-else-if="tempF >= 70 && tempF < 80" class="lead text-muted">It's comfortable outside</p>
+            <p v-else-if="tempF >= 40 && tempF < 70" class="lead text-muted">It's chilly outside</p>
+            <p v-else="tempF < 40" class="lead text-muted">It's cold outside!</p>
+          </section>
+          <section class="mb-4">
+            <div v-for="city in cities" class="card">
+              <div class="card-body">
+                {{ city.name }} - {{ city.tempF }}&deg;
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -57,11 +59,18 @@
       data: {
         tempF: 75,
         cities: [
-          { name: "Atlanta" },
-          { name: "New York" },
-          { name: "Austin" },
-          { name: "Seattle" },
-          { name: "Tokyo" }
+          {
+            name: 'Atlanta',
+            tempF: 75
+          },
+          {
+            name: 'New York',
+            tempF: 65
+          },
+          {
+            name: 'Austin',
+            tempF: 85
+          },
         ]
       }
     })

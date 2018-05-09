@@ -39,10 +39,6 @@
       <div class="container">
         <h1 class="jumbotron-heading">Learn Vue.js</h1>
         <p class="lead text-muted">By Kiley Dorton</p>
-        <p>
-          <a href="#" class="btn btn-secondary my-2">Subtract One</a>
-          <a href="#" class="btn btn-primary my-2">Add One</a>
-        </p>
       </div>
     </section>
   </main>

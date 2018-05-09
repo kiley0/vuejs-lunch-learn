@@ -28,11 +28,18 @@
   data: {
     tempF: 75,
     cities: [
-      { name: "Atlanta" },
-      { name: "New York" },
-      { name: "Austin" },
-      { name: "Seattle" },
-      { name: "Tokyo" }
+      {
+        name: 'Atlanta',
+        tempF: 75
+      },
+      {
+        name: 'New York',
+        tempF: 65
+      },
+      {
+        name: 'Austin',
+        tempF: 85
+      },
     ]
   }
 ```
@@ -43,7 +50,7 @@
 <div>
   <div class="card" v-for="city in cities">
     <div class="card-body">
-      {{ city.name }}
+      {{ city.name }} - {{ city.tempF }}&deg;
     </div>
   </div>
 </div>
