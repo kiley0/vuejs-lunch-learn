@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+
+  <title>Learn Vue.js</title>
+</head>
+
+<body>
+  <header>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex justify-content-between">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <strong>Learn Vue.js</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="app" role="main">
+
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Learn Vue.js</h1>
+        <p class="lead text-muted">By {{ userFullName }}</p>
+        <div>
+          <section class="mb-2">
+            <p class="lead text-muted">Current Temperature: {{tempF}}&deg;</p>
+            <p v-if="tempF >= 90" class="lead text-muted">It's hot outside!</p>
+            <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
+            <p v-else-if="tempF >= 70 && tempF < 80" class="lead text-muted">It's comfortable outside</p>
+            <p v-else-if="tempF >= 40 && tempF < 70" class="lead text-muted">It's chilly outside</p>
+            <p v-else="tempF < 40" class="lead text-muted">It's cold outside!</p>
+            <button type="button" class="btn" v-on:click="randomizeTemp">New Temp</button>
+          </section>
+          <section class="text-left">
+            <hr>
+            <div class="form-group text-left">
+              <label for="firstNameInput">First Name</label>
+              <input v-model="user.firstName" type="text" class="form-control" id="firstNameInput" placeholder="Kiley">
+            </div>
+            <div class="form-group text-left">
+              <label for="lastNameInput">Last Name</label>
+              <input v-model="user.lastName" type="text" class="form-control" id="lastNameInput" placeholder="Dorton">
+            </div>
+            <hr>
+          </section>
+          <section>
+            <button type="button" class="btn btn-primary mb-1" v-on:click="toggleShowCities">{{showCities ? 'Hide' : 'Show'}} Cities</button>
+            <div v-if="showCities">
+              <city-card v-for="city in cities" v-bind:city="city" v-bind:key="city.name">
+              </city-card>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vue development version goes here -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    Vue.component("city-card", {
+      // The todo-item component now accepts a
+      // "prop", which is like a custom attribute.
+      // This prop is called todo.
+      props: ["city"],
+      template: `
+        <div class="card">
+          <div class="card-body">
+            {{ city.name }}
+          </div>
+        </div>
+      `
+    });
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        tempF: 75,
+        showCities: false,
+        user: {
+          firstName: 'Kiley',
+          lastName: 'Dorton'
+        },
+        cities: [
+          { name: "Atlanta" },
+          { name: "New York" },
+          { name: "Austin" },
+          { name: "Seattle" },
+          { name: "Tokyo" }
+        ]
+      },
+      methods: {
+        randomizeTemp: function () {
+          this.tempF = Math.floor(Math.random() * 100);
+        },
+        toggleShowCities: function () {
+          this.showCities = !this.showCities
+        }
+      },
+      computed: {
+        userFullName: function () {
+          return this.user.firstName + " " + this.user.lastName;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
