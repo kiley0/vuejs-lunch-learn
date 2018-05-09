@@ -17,8 +17,8 @@
 ```html
 <p v-else-if="tempF >= 80 && tempF < 90" class="lead text-muted">It's warm outside</p>
 <p v-else-if="tempF >= 70 && tempF < 80" class="lead text-muted">It's comfortable outside</p>
-<p v-else-if="tempF < 70" class="lead text-muted">It's chilly outside</p>
-<p v-else="tempF < 70" class="lead text-muted">It's cold outside!</p>
+<p v-else-if="tempF >= 40 && tempF < 70" class="lead text-muted">It's chilly outside</p>
+<p v-else="tempF < 40" class="lead text-muted">It's cold outside!</p>
 ```
 
 * Play with the temp to see it in action
@@ -37,15 +37,15 @@
   }
 ```
 
-* Add an ordered list below the temperature
+* Add city cards below the temperature
 
 ```html
-<div class="text-left">
-  <ol>
-    <li v-for="city in cities">
+<div>
+  <div class="card" v-for="city in cities">
+    <div class="card-body">
       {{ city.name }}
-    </li>
-  </ol>
+    </div>
+  </div>
 </div>
 ```
 
