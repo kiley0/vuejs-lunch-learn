@@ -100,13 +100,16 @@
 
 * Move the index file into a folder and open it in VSCode
 
+(skip the server, it's not necessary)
+
+<!--
 * run `npm init`
 
 * install HTTP Server
   `npm install http-server`
 
 * start the server
-  `http-server`
+  `http-server` -->
 
 * Pull the data from a real API (OpenWeatherMap)
   `http://api.openweathermap.org/data/2.5/forecast`
