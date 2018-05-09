@@ -84,9 +84,16 @@
               console.log("Fetched current weather from OpenWeatherMap:");
               console.log(data);
             })
+            .catch(err => {
+              console.warn(err);
+            })
         },
         fetchFiveDayForecast: function () {
-          return fetch(`http://${OWM_FORECAST_URL}?q=${this.cityName}&units=imperial&APPID=${OWM_API_KEY}`)
+          return fetch(
+            `http://${OWM_FORECAST_URL}?q=${
+            this.cityName
+            }&units=imperial&APPID=${OWM_API_KEY}`
+          )
             .then(response => response.json())
             .then(data => {
               if (data.list && data.list.length > 0) {
@@ -95,7 +102,7 @@
                     timestamp: new Date(f.dt_txt).toString(),
                     temp: f.main.temp,
                     weatherDesc: f.weather[0].description
-                  }
+                  };
                 });
               }
               console.log("Fetched forecase from OpenWeatherMap:");
@@ -103,9 +110,9 @@
             })
             .catch(err => {
               console.warn(err);
-            })
+            });
         }
-      }
+      },
     })
   </script>
 </body>
