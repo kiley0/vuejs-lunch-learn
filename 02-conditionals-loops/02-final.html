@@ -38,7 +38,7 @@
           <h5 class="card-title">{{ cityName }}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Now: {{ tempF }}&deg; - {{ weatherDesc }}</h6>
           <p class="card-text">
-            <p>Five-day Forecast</p>
+            <p>Five-day Forecast (avg: {{ fetchFiveDayForecast }}&deg;</p>
             <p v-for="forecast in forecastFiveDays">
               <b>{{ forecast.temp }}&deg;</b>
               <br />
@@ -113,6 +113,14 @@
             });
         }
       },
+      computed: {
+        fiveDayAverageTemp: function () {
+          return (
+            Math.round(this.forecastFiveDays.reduce((acc, curr) => acc + curr.temp, 0) /
+              this.forecastFiveDays.length)
+          );
+        }
+      }
     })
   </script>
 </body>

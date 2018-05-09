@@ -128,3 +128,24 @@ var app = new Vue({
   <small>{{ forecast.timestamp }}</small>
 </p>
 ```
+
+* Add a placeholder to display the average across five days
+
+```html
+<p>Five-day Forecast (avg: {{ fiveDayAverageTemp }}&deg;)<p>
+```
+
+* Then add a computed property
+
+```js
+var app = new Vue({
+  computed: {
+    fiveDayAverageTemp: function() {
+      return Math.round(
+        this.forecastFiveDays.reduce((acc, curr) => acc + curr.temp, 0) /
+          this.forecastFiveDays.length
+      );
+    }
+  }
+});
+```
